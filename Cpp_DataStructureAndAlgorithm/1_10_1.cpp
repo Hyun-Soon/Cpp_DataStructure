@@ -1,48 +1,21 @@
-#include <queue>
 #include <iostream>
-#include <sstream>
+#include <queue>
 
-struct Job
+class Job
 {
-	int ID;
-	std::string username;
+	int id;
+	std::string user;
 	int pages;
-};
 
-class Printer
-{
+	static int count;
+
 public:
+	Job(const std::string& u, int p) : user(u), pages(p), id(++count) {}
 
-	std::queue<Job> printList;
-	
-
-	void requestPrint(Job& task)
+	friend std::ostream& operator<<(std::ostream& os, const Job& j)
 	{
-		printList.push(task);
-		return;
-	}
-
-	friend std::ostream& operator<<(std::ostream& os, Job& j)
-	{
-		os << "ID : " << j.ID << ", username : " << j.username << ", pages : " << j.pages << std::endl;
+		os << "id : " << j.id << ", user : " << j.user << ", pages : " << j.pages;
 		return os;
 	}
-
-	void print()
-	{
-		auto p = printList.front();
-
-		//std::cout << p;
-	}
 };
 
-int main()
-{
-	Job a = {3, "soon", 10};
-	Printer b;
-	b.requestPrint(a);
-	std::cout << b.printList.front();
-
-
-	return 0;
-}
